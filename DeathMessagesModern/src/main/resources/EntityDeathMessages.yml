@@ -1,73 +1,73 @@
-# DeathMessages by Dreeam__ (Original by MrShawn/Joshb_/CosmoConsole[DeathMessagesPrime Author])
+# DeathMessages by Dreeam__ (Orijinal: MrShawn/Joshb_/CosmoConsole[DeathMessagesPrime Yazarı])
 #
-# All configs from this plugin has an auto updater. Meaning if I add a value in the config from updates,
-# the value will be automatically added without regenerating the configs.
+# Bu eklentideki tüm yapılandırmalar otomatik güncelleyicidir. Yani, güncellemelerde yeni bir değer eklenirse,
+# bu değer yapılandırmalar yeniden oluşturulmadan otomatik olarak eklenir.
 #
-# Entity Death Messages Config
-# This config lets you configure death messages of mobs. (I.E: Enderdragon,
+# Varlık (Mob) Ölüm Mesajları Yapılandırması
+# Bu yapılandırma, yaratıkların ölüm mesajlarını özelleştirmenizi sağlar. (Örneğin: Ender Dragon)
 #
-#Placeholders:
-# %killer% - returns the player name
-# %killer_display% - returns the custom display name of the player
-# %owner% - returns the entities owner's name (Dog, cat, Parrot...) Only works in Tamed sections.
-# %weapon% - returns a tooltip of the item name, lore, and enchantments
-# %entity% - returns the entity's type. (Defined in Messages.yml in the Mobs section)
-# %entity_display% - returns the entity's custom name. If it has no name, it will default to %entity%
-# %biome% - returns the biome name the player located
-# %world% - returns the world name
-# %world_environment% - returns the environment of the world (normal, nether, the_end) (These are configurable in Messages.yml (Environment))
-# %x% - returns the x position the player died at.
-# %y% - returns the y position the player died at.
-# %z% - returns the z position the player died at.
+# Değişkenler:
+# %killer% - oyuncunun adını döndürür
+# %killer_display% - oyuncunun özel görüntü adını döndürür
+# %owner% - varlığın sahibinin adını döndürür (Köpek, kedi, papağan...) Sadece evcilleştirilmiş varlıklar için çalışır.
+# %weapon% - eşyanın adını, açıklamasını ve büyülerini içeren bir bilgi kutucuğu döndürür
+# %entity% - varlık türünü döndürür (Messages.yml içindeki Mobs bölümünde tanımlanır)
+# %entity_display% - varlığın özel adını döndürür. Eğer özel bir adı yoksa, %entity% değişkeni kullanılır.
+# %biome% - oyuncunun bulunduğu biyomun adını döndürür
+# %world% - oyuncunun öldüğü dünyanın adını döndürür
+# %world_environment% - dünyanın ortamını döndürür (normal, nether, the_end) (Bu değerler Messages.yml içinde yapılandırılabilir)
+# %x% - oyuncunun öldüğü X koordinatını döndürür
+# %y% - oyuncunun öldüğü Y koordinatını döndürür
+# %z% - oyuncunun öldüğü Z koordinatını döndürür
 #
-#Text components:
+# Metin bileşenleri:
 #
-# Using "::" in the messages will create text components.
-# Format as followed: Base text::Hover text::Action
-# Actions must start with either COMMAND:, or SUGGEST_COMMAND:
-# You can add lines in the hover messages like so "line one\nLine Two....."
-# Examples:
-# "%player% was killed by [%killer%::&cLocations: X:%x%, Y:%y%, Z:%z%::COMMAND::tppos %x% %y% %z%]"
-# "%player% was killed by [%killer%::&cLocations: X:%x%, Y:%y%, Z:%z%]"
-# "%player% was killed by [%killer%::&cLocations: X:%x%, Y:%y%, Z:%z%::SUGGEST_COMMAND::msg %player% lol noob]"
+# Mesajlarda "::" kullanarak metin bileşenleri oluşturabilirsiniz.
+# Format şu şekildedir: Ana metin::Üzerine gelindiğinde görünen metin::Eylem
+# Eylemler, COMMAND: veya SUGGEST_COMMAND: ile başlamalıdır.
+# Açıklama metnine satır eklemek için "\n" kullanabilirsiniz. Örnekler:
+# "%player%, [%killer%::&cKonum: X:%x%, Y:%y%, Z:%z%::COMMAND::tppos %x% %y% %z%] tarafından öldürüldü"
+# "%player%, [%killer%::&cKonum: X:%x%, Y:%y%, Z:%z%] tarafından öldürüldü"
+# "%player%, [%killer%::&cKonum: X:%x%, Y:%y%, Z:%z%::SUGGEST_COMMAND::msg %player% haha noob] tarafından öldürüldü"
 #
-# !!!!!!!!!!!!!!!!!!!!LOOK HERE :EYES: :EYES:!!!!!!!!!!!!!!!!!!!!!!!!!
-# If you do not want to use this feature of the plugin. Setup this config like so:
+# !!!!!!!!!!!!!!!!!!!!BURAYA DİKKAT :EYES: :EYES:!!!!!!!!!!!!!!!!!!!!!!!
+# Eğer bu eklenti özelliğini kullanmak istemiyorsanız, aşağıdaki gibi yapılandırın:
 #
 # Entities: []
 #
-# That's it.
+# İşte bu kadar.
 
-# Vanilla Entities
+# Vanilla Varlıkları (Varsayılan Minecraft yaratıkları)
 Entities:
-  # Below is an example of how this section is setup. You can use any death-type like in PlayerDeathMessages.yml
+  # Aşağıda, bu bölümün nasıl yapılandırıldığına dair bir örnek bulunmaktadır.
+  # PlayerDeathMessages.yml'deki gibi herhangi bir ölüm türünü kullanabilirsiniz.
   wolf:
     Tamed:
-      - "%killer% killed %owner%'s %entity%"
+      - "%killer%, %owner%'ın %entity%'ini öldürdü"
     Projectile-Arrow:
-      - "%killer% 360'd Y Y'd a poor little doggy using %weapon%"
+      - "%killer%, zavallı küçük bir köpeği %weapon% kullanarak 360 Y Y yaptı!"
     Weapon:
-      - "%killer% murdered a dog using %weapon%"
+      - "%killer%, bir köpeği %weapon% kullanarak öldürdü"
     Melee:
-      - "%killer% killed a random dog"
+      - "%killer%, rastgele bir köpeği öldürdü"
     Void:
-      - "%killer% pushed a random dog into the void"
+      - "%killer%, bir köpeği boşluğa itti!"
     TNT:
-      - "%killer% blew up a dog!"
+      - "%killer%, bir köpeği patlattı!"
     Respawn-Anchor:
-      - "%killer% blew up a dog using a respawn-anchor"
+      - "%killer%, bir köpeği respawn-anchor kullanarak havaya uçurdu!"
   enderdragon:
     Projectile-Arrow:
-      - "%killer% 360'd Y Y'd the &6&lEnder Dragon &cusing %weapon%"
+      - "%killer%, &6&lEnder Ejderhası &c'ni %weapon% kullanarak 360 Y Y yaptı!"
     Melee:
-      - "The Ender Dragon was taken down by %killer%!"
+      - "Ender Ejderhası, %killer% tarafından yere serildi!"
 
-# Mythic-Mob Entities https://mythiccraft.io/index.php?resources/mythicmobs.1/
+# Mythic-Mob Varlıkları (https://mythiccraft.io/index.php?resources/mythicmobs.1/)
 Mythic-Mobs-Entities:
   SkeletalMinion:
     Melee:
-      - "%killer% killed skele boss %entity_display% with their bare hands"
+      - "%killer%, skele boss %entity_display%'ı çıplak elleriyle öldürdü"
     Weapon:
-      - "%killer% destroyed the boss mob %entity_display% with %weapon%"
+      - "%killer%, boss yaratık %entity_display%'ı %weapon% kullanarak yok etti"
     TNT:
-      - "%killer% blew up the boss mob %entity_display% with TNT"
+      - "%killer%, TNT kullanarak boss yaratık %entity_display%'ı patlattı"
