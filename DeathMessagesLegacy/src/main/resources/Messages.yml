@@ -4,204 +4,195 @@ Prefix: "&7[&cDM&7] "
 Console:
   # Send death messages to console
   Enabled: true
-  Message: "%message% (Extra: World:%world%, X:%x%, Y:%y%, Z:%z%)"
+  Message: "%message% (Ekstra: Dünya:%world%, X:%x%, Y:%y%, Z:%z%)"
 Bungee:
   # Configure how bungee messages look from other servers.
   # Only available placeholder is %server_name%
   Message: "&a%server_name%&7> "
 Commands:
   DeathMessages:
-    Player-Only-Command: "&cOnly players can run this command."
-    No-Permission: "%prefix%&cYou do not have permission for this command."
+    Player-Only-Command: "&cBu komutu yalnızca oyuncular çalıştırabilir."
+    No-Permission: "%prefix%&cBu komut için izniniz yok."
     Help:
-      - "%prefix%&aDeathMessages Command Help List:"
+      - "%prefix%&aDeathMessages Komut Yardım Listesi:"
       - ""
-      - "&a/deathmessages backup &7- Backup DeathMessages configs."
-      - "&a/deathmessages blacklist <username> &7- Blacklists the user from death messages. They will still see other players' death messages, but not send them."
-      - "&a/deathmessages discordlog &7- Show DiscordSRV <-> DeathMessages configuration."
-      - "&a/deathmessages edit <entity, player> <mobName> <solo, gang> <damage-type> <add, remove, list> (remove only=Placeholder) &7- Edits the death messages."
-      - "&a/deathmessages reload &7- Reload plugin configs."
-      - "&a/deathmessages restore &7- Restore configs from your backup."
-      - "&a/deathmessages toggle &7- Toggle death messages on or off."
-      - "&a/deathmessages version &7- Show plugin info and check updates."
+      - "&a/deathmessages backup &7- DeathMessages yapılandırmalarını yedekleyin."
+      - "&a/deathmessages blacklist <kullanıcı adı> &7- Kullanıcıyı ölüm mesajlarından kara listeye alın. Diğer oyuncuların ölüm mesajlarını görmeye devam edecekler, ancak göndermeyecekler."
+      - "&a/deathmessages discordlog &7- DiscordSRV <-> DeathMessages yapılandırmasını gösterir."
+      - "&a/deathmessages edit <varlık, oyuncu> <mobAdı> <tek, grup> <hasar-türü> <ekle, kaldır, listele> (kaldır sadece=Yer Tutucu) &7- Ölüm mesajlarını düzenler."
+      - "&a/deathmessages reload &7- Eklenti yapılandırmalarını yeniden yükle."
+      - "&a/deathmessages restore &7- Yedeklemenize göre yapılandırmaları geri yükleyin."
+      - "&a/deathmessages toggle &7- Ölüm mesajlarını aç veya kapat."
+      - "&a/deathmessages version &7- Eklenti bilgilerini göster ve güncellemeleri kontrol et."
     Sub-Commands:
       Reload:
-        Reloaded: "%prefix%&aReloaded all plugin configs."
+        Reloaded: "%prefix%&aTüm eklenti yapılandırmaları yeniden yüklendi."
       Toggle:
-        Toggle-On: "%prefix%&aYou have toggled your death messages &lON"
-        Toggle-Off: "%prefix%&aYou have toggled your death messages &c&lOFF"
+        Toggle-On: "%prefix%&aÖlüm mesajlarınızı &lAÇIK olarak değiştirdiniz"
+        Toggle-Off: "%prefix%&aÖlüm mesajlarınızı &c&lKAPALI olarak değiştirdiniz"
       Blacklist:
-        Help: "%prefix%&aUsage: /dm blacklist <username> &7- blacklists the user from death messages. They will still see death messages, but not send them."
-        Username-None-Existent: "%prefix%&cCould not find the player with the username &e%player%"
-        Blacklist-Add: "%prefix%&aBlacklisted &e%player%&a!"
-        Blacklist-Remove: "%prefix%&aRemoved &e%player% &afrom being blacklisted."
-      Version: "%prefix%&aRunning DeathMessages %version% by %authors%"
+        Help: "%prefix%&aKullanım: /dm blacklist <kullanıcı adı> &7- kullanıcıyı ölüm mesajlarından kara listeye alır. Ölüm mesajlarını görmeye devam edecekler, ancak göndermeyecekler."
+        Username-None-Existent: "%prefix%&c%player% kullanıcı adına sahip oyuncu bulunamadı"
+        Blacklist-Add: "%prefix%&aKara listeye alındı &e%player%&a!"
+        Blacklist-Remove: "%prefix%&aKara listeden &e%player% &a kaldırıldı."
+      Version: "%prefix%&aDeathMessages %version% çalışıyor, geliştiriciler: %authors%"
       Edit:
-        Usage: "%prefix%&a/dm edit <player> <mobName> <solo, gang> <damage-type> <add, remove, list> (remove only=Placeholder) &7- Edits the death messages."
-        Invalid-Mob-Type: "%prefix%&cThe mob name you specified does not exist."
-        Invalid-Damage-Type: "%prefix%&cThe damage type you specified does not exist. Try using tab complete to select one."
-        Invalid-Arguments: "%prefix%&cInvalid arguments. Use &a/dm edit &cto view them."
-        Invalid-Placeholder: "%prefix%&cThe placeholder must be numeric."
-        Removed-Message: "%prefix%&cRemoved '%message%'"
-        Invalid-Selection: "%prefix%&cThe message with that placeholder does not exist."
-        Adding-Start: "%prefix%&a You are in add message mode. Start typing in chat to add a new message."
-        Added-Message: "%prefix%&aAdded &e'&r%message%&e' &a to %mob_name% > %mode% > %damage_type%"
+        Usage: "%prefix%&a/dm edit <oyuncu> <mobAdı> <tek, grup> <hasar-türü> <ekle, kaldır, listele> (kaldır sadece=Yer Tutucu) &7- Ölüm mesajlarını düzenler."
+        Invalid-Mob-Type: "%prefix%&cBelirttiğiniz mob adı mevcut değil."
+        Invalid-Damage-Type: "%prefix%&cBelirttiğiniz hasar türü mevcut değil. Birini seçmek için sekme tamamlama kullanmayı deneyin."
+        Invalid-Arguments: "%prefix%&cGeçersiz argümanlar. Görmek için &a/dm edit &ckullanın."
+        Invalid-Placeholder: "%prefix%&cYer tutucu sayısal olmalıdır."
+        Removed-Message: "%prefix%&c'%message%' kaldırıldı"
+        Invalid-Selection: "%prefix%&cBelirtilen yer tutucuya sahip mesaj mevcut değil."
+        Adding-Start: "%prefix%&aYeni bir mesaj eklemek için sohbetten yazmaya başlayın."
+        Added-Message: "%prefix%&a &e'&r%message%&e' &a eklendi %mob_name% > %mode% > %damage_type%"
       Backup:
-        Usage: "%prefix%&a/dm backup <true, false> &7- Backup plugin files. True will not save user-data, false will save user-data."
-        Backed-Up: "%prefix%&aBackup &e#%backup-code% &ahas been saved."
+        Usage: "%prefix%&a/dm backup <true, false> &7- Eklenti dosyalarını yedekleyin. True kullanıcı verilerini kaydetmez, false kaydeder."
+        Backed-Up: "%prefix%&aYedek &e#%backup-code% &abaşarıyla kaydedildi."
       Restore:
-        Usage: "%prefix%&a/dm restore <backup-code> <true, false> &7- True will not restore user-data, false will restore user-data."
-        Restored: "%prefix%&aPlugin files restored from backup &e#%backup-code%"
-        Backup-Not-Found: "%prefix%&cThe backup with that code does not exist."
+        Usage: "%prefix%&a/dm restore <backup-code> <true, false> &7- True kullanıcı verilerini geri yüklemez, false kullanıcı verilerini geri yükler."
+        Restored: "%prefix%&aEklenti dosyaları &e#%backup-code% &ayedekten geri yüklendi."
+        Backup-Not-Found: "%prefix%&cBu koda sahip bir yedek yok."
       DiscordLog:
-        - "%prefix%&3Discord Status Log for support:"
-        - "&7Take a picture of this and send it to the support chat if you created a ticket regarding discord issues:"
+        - "%prefix%&3Destek için Discord Durum Günlüğü:"
+        - "&7Discord sorunları hakkında bir destek bileti oluşturduysanız, bundan bir resim alın ve destek sohbetine gönderin:"
         - "&aDiscord-API-JAR: &c%discordJar%"
-        - "&aToken &c(Redacted)&a: &c%discordToken%"
-        - "&aConfig Output:"
+        - "&aToken &c(Koyulmadı)&a: &c%discordToken%"
+        - "&aYapılandırma Çıktısı:"
         - "%discordConfig%"
 Discord:
-  # %player% - returns the player name
-  # %player_display% - returns the custom display name of the player
-  # %killer% - returns the entity's name. If there is no name set, it will be the entity type.
-  # %killer_display% - if the killer is a player, returns the display name of the player
-  # %killer_type% - returns the entity type from Mobs.<Mob> in Messages.yml
-  # %biome% - returns the biome the player was in
-  # %world% - returns the world name
-  # %world_environment% - returns the environment of the world (normal, nether, the_end) (These are configurable in Messages.yml (Environment))
-  # %x% - returns the x position the player died at.
-  # %y% - returns the y position the player died at.
-  # %z% - returns the z position the player died at.
-  # Placeholders from placeholderapi works here too
+  # %player% - Oyuncunun adını döndürür.
+  # %player_display% - Oyuncunun özel görünen adını döndürür.
+  # %killer% - Öldüren varlığın adını döndürür. Eğer bir adı yoksa, varlık türünü gösterir.
+  # %killer_display% - Eğer öldüren bir oyuncuysa, oyuncunun görünen adını döndürür.
+  # %killer_type% - Öldüren varlığın türünü döndürür. (Messages.yml dosyasındaki Mobs.<Mob> kısmından alınır.)
+  # %biome% - Oyuncunun öldüğü biyomu döndürür.
+  # %world% - Oyuncunun öldüğü dünya adını döndürür.
+  # %world_environment% - Oyuncunun öldüğü dünyanın türünü döndürür. (normal, nether, the_end) (Bu ayarlar Messages.yml dosyasında yapılandırılabilir.)
+  # %x% - Oyuncunun öldüğü X koordinatını döndürür.
+  # %y% - Oyuncunun öldüğü Y koordinatını döndürür.
+  # %z% - Oyuncunun öldüğü Z koordinatını döndürür.
+  # PlaceholderAPI eklentisinden gelen değişkenler de burada çalışır.
   DeathMessage:
     Remove-Plugin-Prefix: false
-    # Besides the color, you can leave all this blank if you want.
     Color: BLUE
-    # NEW: this was how the old DMP had messages formatted (Playerhead - IconURL, Name - the death message)
     Author:
-      # The message of the author
       Name: "%message%"
-      # The clickable link
       URL: ""
-      # The head picture of the dead player
-      # If you are a offline server, you should use %username% instead of %uuid%
-      # Placeholders: %uuid%, %username%
-      Icon-URL: "https://cravatar.eu/helmavatar/%username%"
-    Title: "DeathMessage"
+      # Ölen oyuncunun başlık resmi
+      # Eğer sunucunuz çevrimdışı modda çalışıyorsa, %uuid% yerine %username% kullanmalısınız.
+      # Kullanılabilir değişkenler: %uuid%, %username%
+      Icon-URL: https://cravatar.eu/helmavatar/%username%
+    Title: Ölüm Mesajı
     Description: "%message%"
-    Image: "https://cravatar.eu/helmavatar/%username%"
-    # Block title|Block value|inline boolean
-    # To have no content, set content to 'Content: []'
+    Image: https://cravatar.eu/helmavatar/%username%
     Content:
-      - "Location:|World: %world%, X: %x%, Y: %y%, Z: %z%|false"
+      - "Konum:|Dünya: %world%, X: %x%, Y: %y%, Z: %z%|false"
     Footer:
-      Text: "Footer text here"
-      Icon-URL: "https://cravatar.eu/helmavatar/%username%"
+      Text: Alt metin burada
+      Icon-URL: https://cravatar.eu/helmavatar/%username%
     Timestamp: true
-    # Defining the message below will ignore all above embed values and just return regular text.
-    # Meaning if you change Text: "" to anything else, the plugin will send regular text.
-    # You may use \n to make another line.
-    # Example: Text: "%message%\nX:%x%\nY:%y%\nZ:%z%"
+    # Aşağıdaki mesajı tanımlamak, yukarıdaki tüm gömülü (embed) değerleri yok sayacak ve yalnızca normal metin döndürecektir.
+    # Yani, eğer Text: "" değerini değiştirirseniz, eklenti normal metin gönderecektir.
+    # Yeni bir satıra geçmek için \n kullanabilirsiniz.
+    # Örnek: Text: "%message%\nX:%x%\nY:%y%\nZ:%z%"
     Text: ""
-
-#Translations
-# Mobs: these translations will affect the %killer_type% placeholder
 Mobs:
-  elderguardian: "Elder Guardian"
-  witherskeleton: "Wither Skeleton"
-  stray: "Stray"
-  husk: "Husk"
-  zombievillager: "Zombie Villager"
-  skeletonhorse: "Skeleton Horse"
-  zombiehorse: "Zombie Horse"
-  armorstand: "Armor Stand"
-  donkey: "Donkey"
-  mule: "Mule"
-  evoker: "Evoker"
-  vex: "Vex"
-  vindicator: "Vindicator"
-  illusioner: "Illusioner"
-  creeper: "Creeper"
-  skeleton: "Skeleton"
-  spider: "Spider"
-  giant: "Giant"
-  zombie: "Zombieeeeeee"
-  slime: "Slime"
-  ghast: "Ghast"
-  pigzombie: "Pig Zombie"
-  enderman: "Enderman"
-  cavespider: "Cave Spider"
-  silverfish: "Silverfish"
-  blaze: "Blaze"
-  magmacube: "Magma Cube"
-  enderdragon: "Ender Dragon"
-  wither: "Wither"
-  bat: "Bat"
-  witch: "Witch"
-  endermite: "Endermite"
-  guardian: "Guardian"
-  shulker: "Shulker"
-  pig: "Pig"
-  sheep: "Sheep"
-  cow: "Cow"
-  chicken: "Chicken"
-  squid: "Squid"
-  wolf: "Wolf"
-  mushroomcow: "Mushroom Cow"
-  snowman: "Snowman"
-  ocelot: "Ocelot"
-  irongolem: "Iron Golem"
-  horse: "Horse"
-  rabbit: "Rabbit"
-  polarbear: "Polar Bear"
-  llama: "Llama"
-  parrot: "Parrot"
-  villager: "Villager"
-  turtle: "Turtle"
-  phantom: "Phantom"
-  cod: "Cod"
-  salmon: "Salmon"
-  pufferfish: "Puffer Fish"
-  tropicalfish: "Tropical Fish"
-  drowned: "Drowned"
-  dolphin: "Dolphin"
-  cat: "Cat"
-  panda: "Panda"
-  pillager: "Pillager"
-  ravager: "Ravager"
-  traderllama: "Trader Llama"
-  wanderingtrader: "Wandering Trader"
-  fox: "Fox"
-  bee: "Bee"
-  hoglin: "Hoglin"
-  piglin: "Piglin"
-  strider: "Strider"
-  zoglin: "Zoglin"
-  piglinbrute: "Piglin Brute"
-  goat: "Goat"
-  glow_squid: "Glow Squid"
-  axolotl: "Axolotl"
-  allay: "Allay"
-  frog: "Frog"
-  tadpole: "Tadpole"
-  warden: "Warden"
-  camel: "Camel"
-  sniffer: "Sniffer"
-  armadillo: "Armadillo"
-  bogged: "Bogged"
-  breeze: "Breeze"
-  creaking: "Creaking"
+  elderguardian: Yaşlı Muhafız
+  witherskeleton: Wither İskeleti
+  stray: Başıboş
+  husk: Kabuk
+  zombievillager: Zombi Köylü
+  skeletonhorse: İskelet Atı
+  zombiehorse: Zombi Atı
+  armorstand: Zırh Standı
+  donkey: Eşek
+  mule: Katır
+  evoker: Çağırıcı
+  vex: Vex
+  vindicator: Vindicator
+  illusioner: Illusioner
+  creeper: Creeper
+  skeleton: İskelet
+  spider: Örümcek
+  giant: Dev
+  zombie: Zombi
+  slime: Slime
+  ghast: Ağlayan Hayalet
+  pigzombie: Domuz Zombi
+  enderman: Enderman
+  cavespider: Mağara Örümceği
+  silverfish: Gümüş Balığı
+  blaze: Blaze
+  magmacube: Magma Küpü
+  enderdragon: Ender Ejderhası
+  wither: Wither
+  bat: Yarasa
+  witch: Cadı
+  endermite: Endermite
+  guardian: Muhafız
+  shulker: Shulker
+  pig: Domuz
+  sheep: Koyun
+  cow: İnek
+  chicken: Tavuk
+  squid: Kalamar
+  wolf: Kurt
+  mushroomcow: Mantar İneği
+  snowman: Kardan Adam
+  ocelot: Ocelot
+  irongolem: Demir Golem
+  horse: At
+  rabbit: Tavşan
+  polarbear: Kutup Ayısı
+  llama: Lama
+  parrot: Papağan
+  villager: Köylü
+  turtle: Kaplumbağa
+  phantom: Hayalet
+  cod: Morina Balığı
+  salmon: Somon
+  pufferfish: Kirpi Balığı
+  tropicalfish: Tropikal Balık
+  drowned: Boğulmuş
+  dolphin: Yunus
+  cat: Kedi
+  panda: Panda
+  pillager: Yağmacı
+  ravager: Yıkıcı
+  traderllama: Tüccar Lama
+  wanderingtrader: Gezgin Tüccar
+  fox: Tilki
+  bee: Arı
+  hoglin: Hoglin
+  piglin: Piglin
+  strider: Strider
+  zoglin: Zoglin
+  piglinbrute: Piglin Brüt
+  goat: Keçi
+  glow_squid: Parlayan Kalamar
+  axolotl: Aksolotl
+  allay: Allay
+  frog: Kurbağa
+  tadpole: Iribaş
+  warden: Gardiyan
+  camel: Deve
+  sniffer: Koklayıcı
+  armadillo: Armadillo
+  bogged: Batak
+  breeze: Esinti
+  creaking: Gıcırdayan
 Blocks:
-  ladder: "Ladder"
-  anvil: "Anvil"
-  vine: "Vine"
-  twisted_vines_plant: "Twisted Vine"
-  weeping_vines_plant: "Weeping Vine"
-  cave_vines_plant: "Cave Vines"
-  scaffolding: "Scaffolding"
-  chain: "Chain"
+  ladder: Merdiven
+  anvil: Örs
+  vine: Sarmaşık
+  twisted_vines_plant: Bükülmüş Sarmaşık
+  weeping_vines_plant: Ağlayan Sarmaşık
+  cave_vines_plant: Mağara Sarmaşıkları
+  scaffolding: İskele
+  chain: Zincir
 Environment:
-  normal: "over-world"
-  nether: "nether"
-  the_end: "the end"
-  unknown: "unknown"
+  normal: Dünya
+  nether: Nether
+  the_end: End
+  unknown: bilinmeyen
