@@ -82,15 +82,15 @@ Discord:
       # Ölen oyuncunun başlık resmi
       # Eğer sunucunuz çevrimdışı modda çalışıyorsa, %uuid% yerine %username% kullanmalısınız.
       # Kullanılabilir değişkenler: %uuid%, %username%
-      Icon-URL: https://cravatar.eu/helmavatar/%username%
-    Title: Ölüm Mesajı
+      Icon-URL: "https://cravatar.eu/helmavatar/%username%"
+    Title: "Ölüm Mesajı"
     Description: "%message%"
-    Image: https://cravatar.eu/helmavatar/%username%
+    Image: "https://cravatar.eu/helmavatar/%username%"
     Content:
       - "Konum:|Dünya: %world%, X: %x%, Y: %y%, Z: %z%|false"
     Footer:
-      Text: Alt metin burada
-      Icon-URL: https://cravatar.eu/helmavatar/%username%
+      Text: "Alt metin burada"
+      Icon-URL: "https://cravatar.eu/helmavatar/%username%"
     Timestamp: true
     # Aşağıdaki mesajı tanımlamak, yukarıdaki tüm gömülü (embed) değerleri yok sayacak ve yalnızca normal metin döndürecektir.
     # Yani, eğer Text: "" değerini değiştirirseniz, eklenti normal metin gönderecektir.
@@ -98,101 +98,101 @@ Discord:
     # Örnek: Text: "%message%\nX:%x%\nY:%y%\nZ:%z%"
     Text: ""
 Mobs:
-  elderguardian: Yaşlı Muhafız
-  witherskeleton: Wither İskeleti
-  stray: Başıboş
-  husk: Kabuk
-  zombievillager: Zombi Köylü
-  skeletonhorse: İskelet Atı
-  zombiehorse: Zombi Atı
-  armorstand: Zırh Standı
-  donkey: Eşek
-  mule: Katır
-  evoker: Çağırıcı
-  vex: Vex
-  vindicator: Vindicator
-  illusioner: Illusioner
-  creeper: Creeper
-  skeleton: İskelet
-  spider: Örümcek
-  giant: Dev
-  zombie: Zombi
-  slime: Slime
-  ghast: Ağlayan Hayalet
-  pigzombie: Domuz Zombi
-  enderman: Enderman
-  cavespider: Mağara Örümceği
-  silverfish: Gümüş Balığı
-  blaze: Blaze
-  magmacube: Magma Küpü
-  enderdragon: Ender Ejderhası
-  wither: Wither
-  bat: Yarasa
-  witch: Cadı
-  endermite: Endermite
-  guardian: Muhafız
-  shulker: Shulker
-  pig: Domuz
-  sheep: Koyun
-  cow: İnek
-  chicken: Tavuk
-  squid: Kalamar
-  wolf: Kurt
-  mushroomcow: Mantar İneği
-  snowman: Kardan Adam
-  ocelot: Ocelot
-  irongolem: Demir Golem
-  horse: At
-  rabbit: Tavşan
-  polarbear: Kutup Ayısı
-  llama: Lama
-  parrot: Papağan
-  villager: Köylü
-  turtle: Kaplumbağa
-  phantom: Hayalet
-  cod: Morina Balığı
-  salmon: Somon
-  pufferfish: Kirpi Balığı
-  tropicalfish: Tropikal Balık
-  drowned: Boğulmuş
-  dolphin: Yunus
-  cat: Kedi
-  panda: Panda
-  pillager: Yağmacı
-  ravager: Yıkıcı
-  traderllama: Tüccar Lama
-  wanderingtrader: Gezgin Tüccar
-  fox: Tilki
-  bee: Arı
-  hoglin: Hoglin
-  piglin: Piglin
-  strider: Strider
-  zoglin: Zoglin
-  piglinbrute: Piglin Brüt
-  goat: Keçi
-  glow_squid: Parlayan Kalamar
-  axolotl: Aksolotl
-  allay: Allay
-  frog: Kurbağa
-  tadpole: Iribaş
-  warden: Gardiyan
-  camel: Deve
-  sniffer: Koklayıcı
-  armadillo: Armadillo
-  bogged: Batak
-  breeze: Esinti
-  creaking: Gıcırdayan
+  elderguardian: "Yaşlı Muhafız"
+  witherskeleton: "Wither İskeleti"
+  stray: "Başıboş"
+  husk: "Kabuk"
+  zombievillager: "Zombi Köylü"
+  skeletonhorse: "İskelet Atı"
+  zombiehorse: "Zombi Atı"
+  armorstand: "Zırh Standı"
+  donkey: "Eşek"
+  mule: "Katır"
+  evoker: "Çağırıcı"
+  vex: "Vex"
+  vindicator: "Vindicator"
+  illusioner: "Illusioner"
+  creeper: "Creeper"
+  skeleton: "İskelet"
+  spider: "Örümcek"
+  giant: "Dev"
+  zombie: "Zombi"
+  slime: "Slime"
+  ghast: "Ağlayan Hayalet"
+  pigzombie: "Domuz Zombi"
+  enderman: "Enderman"
+  cavespider: "Mağara Örümceği"
+  silverfish: "Gümüş Balığı"
+  blaze: "Blaze"
+  magmacube: "Magma Küpü"
+  enderdragon: "Ender Ejderhası"
+  wither: "Wither"
+  bat: "Yarasa"
+  witch: "Cadı"
+  endermite: "Endermite"
+  guardian: "Muhafız"
+  shulker: "Shulker"
+  pig: "Domuz"
+  sheep: "Koyun"
+  cow: "İnek"
+  chicken: "Tavuk"
+  squid: "Kalamar"
+  wolf: "Kurt"
+  mushroomcow: "Mantar İneği"
+  snowman: "Kardan Adam"
+  ocelot: "Ocelot"
+  irongolem: "Demir Golem"
+  horse: "At"
+  rabbit: "Tavşan"
+  polarbear: "Kutup Ayısı"
+  llama: "Lama"
+  parrot: "Papağan"
+  villager: "Köylü"
+  turtle: "Kaplumbağa"
+  phantom: "Hayalet"
+  cod: "Morina Balığı"
+  salmon: "Somon"
+  pufferfish: "Kirpi Balığı"
+  tropicalfish: "Tropikal Balık"
+  drowned: "Boğulmuş"
+  dolphin: "Yunus"
+  cat: "Kedi"
+  panda: "Panda"
+  pillager: "Yağmacı"
+  ravager: "Yıkıcı"
+  traderllama: "Tüccar Lama"
+  wanderingtrader: "Gezgin Tüccar"
+  fox: "Tilki"
+  bee: "Arı"
+  hoglin: "Hoglin"
+  piglin: "Piglin"
+  strider: "Strider"
+  zoglin: "Zoglin"
+  piglinbrute: "Piglin Brüt"
+  goat: "Keçi"
+  glow_squid: "Parlayan Kalamar"
+  axolotl: "Aksolotl"
+  allay: "Allay"
+  frog: "Kurbağa"
+  tadpole: "Iribaş"
+  warden: "Gardiyan"
+  camel: "Deve"
+  sniffer: "Koklayıcı"
+  armadillo: "Armadillo"
+  bogged: "Batak"
+  breeze: "Esinti"
+  creaking: "Gıcırdayan"
 Blocks:
-  ladder: Merdiven
-  anvil: Örs
-  vine: Sarmaşık
-  twisted_vines_plant: Bükülmüş Sarmaşık
-  weeping_vines_plant: Ağlayan Sarmaşık
-  cave_vines_plant: Mağara Sarmaşıkları
-  scaffolding: İskele
-  chain: Zincir
+  ladder: "Merdiven"
+  anvil: "Örs"
+  vine: "Sarmaşık"
+  twisted_vines_plant: "Bükülmüş Sarmaşık"
+  weeping_vines_plant: "Ağlayan Sarmaşık"
+  cave_vines_plant: "Mağara Sarmaşıkları"
+  scaffolding: "İskele"
+  chain: "Zincir"
 Environment:
-  normal: Dünya
-  nether: Nether
-  the_end: End
-  unknown: bilinmeyen
+  normal: "Dünya"
+  nether: "Nether"
+  the_end: "End"
+  unknown: "bilinmeyen"
