@@ -1,4 +1,4 @@
-name: DeathMessages
+name: DeathMessagesTR
 version: ${version}
 main: dev.mrshawn.deathmessages.DeathMessages
 api-version: 1.13
