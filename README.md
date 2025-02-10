@@ -1,5 +1,11 @@
 # DeathMessages
 
+KARŞILAŞTIĞINIZ ÇEVİRİ HATALARINI BİLDİRİNİZ - 📫 Discord: `_ktana`
+
+
+
+
+
 ![GitHub License](https://img.shields.io/github/license/Winds-Studio/DeathMessages?style=for-the-badge)![GitHub Build Status](https://img.shields.io/github/actions/workflow/status/Winds-Studio/DeathMessages/build.yml?style=for-the-badge)![Github Stars](https://img.shields.io/github/stars/Winds-Studio/DeathMessages?style=for-the-badge)
 
 **_🔔 Active Testing - Report any bugs or give suggestions_**
@@ -47,8 +53,7 @@ Compatibility
 Please feel free to contribute or modify existing translations if they are not right.
 ### Contributors
 
-- [Axtazer](https://github.com/Axtazer) (French Translation)
-- [Santyxs](https://github.com/Santyxs) (Spanish Translation)
+- [Ktanaoff](https://github.com/Ktanaoff) (Turkish Translation)
 
 ### Contribute/Download
 
