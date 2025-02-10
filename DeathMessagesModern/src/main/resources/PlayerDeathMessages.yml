@@ -1,1434 +1,1432 @@
-# DeathMessages by Dreeam__ (Original by MrShawn/Joshb_/CosmoConsole[DeathMessagesPrime Author])
+# DeathMessages by Dreeam__ (Orijinal: MrShawn/Joshb_/CosmoConsole[DeathMessagesPrime Yazarı])
 #
-# All configs from this plugin has an auto updater. Meaning if I add a value in the config from updates,
-# the value will be automatically added without regenerating the configs.
+# Bu eklentideki tüm yapılandırmalar otomatik güncelleyicidir. Yani, güncellemelerde yeni bir değer eklenirse,
+# bu değer yapılandırmalar yeniden oluşturulmadan otomatik olarak eklenir.
 #
-# Player Death Messages Config
+# Oyuncu Ölüm Mesajları Yapılandırması
 #
-#Placeholders:
-# %player% - returns the player name
-# %player_display% - returns the custom display name of the player
-# %weapon% - returns a tooltip of the item name, lore, and enchantments
-# %killer% - returns the entity's name. If there is no name set, it will be the entity type.
-# %killer_display% - if the killer is a player, returns the display name of the player, otherwise fallback to %killer%
-# %killer_type% - returns the entity type from Mobs.<Mob> in Messages.yml
-# %biome% - returns the biome name the player located
-# %world% - returns the world name
-# %world_environment% - returns the environment of the world (normal, nether, the_end) (These are configurable in Messages.yml (Environment))
-# %x% - returns the x position the player died at.
-# %y% - returns the y position the player died at.
-# %z% - returns the z position the player died at.
-# %distance% represents the distance between the player and the killer in blocks (if applicable)
+# Değişkenler:
+# %player% - oyuncunun adını döndürür
+# %player_display% - oyuncunun özel görüntü adını döndürür
+# %weapon% - eşyanın adını, açıklamasını ve büyülerini içeren bir bilgi kutucuğu döndürür
+# %killer% - öldüren varlığın adını döndürür. Eğer isim ayarlanmadıysa, varlık türü gösterilir.
+# %killer_display% - eğer öldüren bir oyuncuysa, oyuncunun görüntü adını döndürür, aksi takdirde %killer%'e geri döner
+# %killer_type% - Mesajlar.yml içindeki Mobs.<Mob> değerine göre varlık türünü döndürür
+# %biome% - oyuncunun bulunduğu biyomun adını döndürür
+# %world% - oyuncunun öldüğü dünyanın adını döndürür
+# %world_environment% - dünyanın ortamını döndürür (normal, nether, the_end) (Bu değerler Messages.yml içinde yapılandırılabilir)
+# %x% - oyuncunun öldüğü X koordinatını döndürür
+# %y% - oyuncunun öldüğü Y koordinatını döndürür
+# %z% - oyuncunun öldüğü Z koordinatını döndürür
+# %distance% - oyuncu ile öldüren arasındaki mesafeyi blok cinsinden döndürür (uygulanabilirse)
 #
-#Text components:
+# Metin bileşenleri:
 #
-# Using "::" in the messages will create text components.
-# Format as followed: Base text::Hover text::Action
-# Actions must start with either COMMAND:, or SUGGEST_COMMAND:
-# You can add lines in the hover messages like so "line one\nLine Two....."
-# Examples:
-# "%player% was killed by [%killer%::&cLocations: X:%x%, Y:%y%, Z:%z%::COMMAND::tppos %x% %y% %z%]"
-# "%player% was killed by [%killer%::&cLocations: X:%x%, Y:%y%, Z:%z%]"
-# "%player% was killed by [%killer%::&cLocations: X:%x%, Y:%y%, Z:%z%::SUGGEST_COMMAND::msg %player% lol noob]"
+# Mesajlarda "::" kullanarak metin bileşenleri oluşturabilirsiniz.
+# Format şu şekildedir: Ana metin::Üzerine gelindiğinde görünen metin::Eylem
+# Eylemler, COMMAND: veya SUGGEST_COMMAND: ile başlamalıdır.
+# Açıklama metnine satır eklemek için "\n" kullanabilirsiniz. Örnekler:
+# "%player%, [%killer%::&cKonum: X:%x%, Y:%y%, Z:%z%::COMMAND::tppos %x% %y% %z%] tarafından öldürüldü"
+# "%player%, [%killer%::&cKonum: X:%x%, Y:%y%, Z:%z%] tarafından öldürüldü"
+# "%player%, [%killer%::&cKonum: X:%x%, Y:%y%, Z:%z%::SUGGEST_COMMAND::msg %player% haha noob] tarafından öldürüldü"
 #
-# Permissions Based Messages
+# Yetkiye Bağlı Mesajlar
 #
-# For victims that have a specific permission set, EX: deathmessages.premium, the death message
-# will be sent that is formatted as followed:
-# PERMISSION[YOUR.PERM.HERE]%player% dead lol
+# Belirli bir izne sahip oyuncular için, örneğin: deathmessages.premium, aşağıdaki formatta özel ölüm mesajı gösterilecektir:
+# PERMISSION[YOUR.PERM.HERE]%player% öldü, lol
 #
-# For killers that have a specific permission set, EX: deathmessages.premium, the death message
-# will be sent that is formatted as followed:
-# PERMISSION_KILLER[YOUR.PERM.HERE]%killer% REKT %player%
+# Belirli bir izne sahip katiller için, örneğin: deathmessages.premium, aşağıdaki formatta özel mesaj gösterilecektir:
+# PERMISSION_KILLER[YOUR.PERM.HERE]%killer%, %player%'ı REKT etti
 #
-# Players that are in a region (With WorldGuard hook enabled) and is defined below, will be sending a custom
-# region messages.
-# Formatted as followed: "REGION[REGION_NAME]%player% died in a region"
-# Example:
+# Oyuncular, belirli bir bölge içindeyse (WorldGuard entegrasyonu etkinleştirildiyse) özel bölge mesajları gönderilir.
+# Format şu şekildedir: "REGION[BÖLGE_ADI]%player%, bu bölgede öldü"
+# Örnek:
 #
 # Mobs:
 #   player:
 #     Melee:
-#       - "%player% was slain by %killer%"
-#       - "PERMISSION[deathmessages.premium]&6Premium %player% &fdied to %killer%
-#       - "REGION[spawn]Idiot %player% died in spawn lol"
-#       If the player has permission and in a region
-#       - "REGION[spawn]PERMISSION[deathmessages.premium]Idiot premium %player% died in spawn lol"
+#       - "%player%, %killer% tarafından öldürüldü"
+#       - "PERMISSION[deathmessages.premium]&6Premium %player% &f, %killer% tarafından öldü"
+#       - "REGION[spawn]Aptal %player%, spawn bölgesinde öldü, haha"
+#       Eğer oyuncunun izni varsa ve belirli bir bölgedeyse:
+#       - "REGION[spawn]PERMISSION[deathmessages.premium]Aptal premium %player%, spawn bölgesinde öldü, haha"
 #
-# To completely remove the message for a certain death. Configure as followed:
-# Natrual-Death:
-#   Bed: []
-# or
+# Belirli bir ölüm mesajını tamamen kaldırmak için aşağıdaki gibi yapılandırın:
+# Doğal-Ölüm:
+#   Yatak: []
+# veya
 # Mobs:
 #   Creeper:
 #     Solo:
-#       Explosion: []
-
-# Due for there being no cure for laziness, this option ignores everything in the Mobs section and makes all messages
-# appear the same.
+#       Patlama: []
+#
+# Tembellik için bir çözüm olmadığından, bu seçenek Mobs bölümündeki tüm mesajları yok sayar ve tüm mesajları aynı yapar.
+#
+# Translation ; Ktanaoff
+#
 
 Basic-Mode:
   Enabled: false
   Solo:
     Projectile-Arrow:
-      - "%player% was shot by a %killer% using %weapon%"
+      - "%player%, %killer% tarafından %weapon% kullanılarak vuruldu"
     Explosion:
-      - "%player% was blown up by a %killer%"
+      - "%player%, %killer% tarafından havaya uçuruldu"
     Projectile-Fireball:
-      - "%player% was shot by a %killer% somehow using %weapon%"
+      - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
     Projectile-ShulkerBullet:
-      - "%player% was shot by a %killer% somehow using %weapon%"
+      - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
     Projectile-Trident:
-      - "%player% was shot by a %killer% somehow using %weapon%"
+      - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
     Magic:
-      - "%player% was killed by a %killer% using magic"
+      - "%player%, %killer% tarafından büyü kullanılarak öldürüldü"
     Sonic-Boom:
-      - "%player% was obliterated by a sonically-charged shriek"
+      - "%player%, sonik yüklü bir çığlık tarafından yok edildi"
     Weapon:
-      - "%player% was slain by a %killer% using %weapon%"
+      - "%player%, %killer% tarafından %weapon% kullanılarak öldürüldü"
     Melee:
-      - "%player% was slain by a %killer%"
+      - "%player%, %killer% tarafından öldürüldü"
     Contact:
-      - "%player% was pushed into a cactus by %killer%"
+      - "%player%, %killer% tarafından bir kaktüse itilerek yaralandı"
   Gang:
     Projectile-Arrow:
-      - "%player% was shot by a group of %killer%'s using %weapon%"
+      - "%player%, bir grup %killer% tarafından %weapon% kullanılarak vuruldu"
     Explosion:
-      - "%player% was blown up by a group of %killer%"
+      - "%player%, bir grup %killer%'ün patlamasıyla havaya uçuruldu"
     Projectile-Fireball:
-      - "%player% was shot by a group of %killer% somehow using %weapon%"
+      - "%player%, bir şekilde bir grup %killer% tarafından %weapon%
+        kullanılarak vuruldu"
     Projectile-ShulkerBullet:
-      - "%player% was shot by a group of %killer% somehow using %weapon%"
+      - "%player%, bir şekilde bir grup %killer% tarafından %weapon%
+        kullanılarak vuruldu"
     Projectile-Trident:
-      - "%player% was shot by a group of %killer% somehow using %weapon%"
+      - "%player%, bir şekilde bir grup %killer% tarafından %weapon%
+        kullanılarak vuruldu"
     Magic:
-      - "%player% was killed by a group of %killer%'s using magic"
+      - "%player%, bir grup %killer%'ün tarafından büyü kullanılarak öldürüldü"
     Sonic-Boom:
-      - "%player% was obliterated by a sonically-charged shriek"
+      - "%player%, sonik yüklü bir çığlık tarafından yok edildi"
     Weapon:
-      - "%player% was slain by a group of %killer%'s somehow using %weapon%"
+      - "%player%, bir grup %killer% tarafından bir şekilde %weapon%
+        kullanılarak öldürüldü"
     Melee:
-      - "%player% was slain by a group of %killer%'s"
+      - "%player%, bir grup %killer% tarafından öldürüldü"
     Contact:
-      - "%player% was pushed into a cactus by a group of %killer%"
-
+      - "%player%, bir grup %killer% tarafından bir kaktüse itildi"
 Natural-Cause:
   Bed:
-    - "%player% tried sleeping in the %world_environment% :kappa:"
+    - "%player%, %world_environment%'da uyumayı denedi :kappa:"
   Respawn-Anchor:
-    - "%player% tried using the respawn anchor in the %world_environment%!"
+    - "%player%, %world_environment%'da yeniden doğma çapasını kullanmayı
+      denedi!"
   Contact:
-    - "%player% was pricked to death"
+    - "%player%, dikenlerle öldü"
   Melee:
-    - "%player% killed themselves"
+    - "%player% intihar etti"
   Projectile-Unknown:
-    - "%player% shot themselves"
+    - "%player% kendini vurdu"
   Projectile-Arrow:
-    - "%player% shot themselves with %weapon%"
+    - "%player% kendini %weapon% ile vurdu"
   Projectile-Egg:
-    - "%player% egged themselves"
+    - "%player% kendini yumurtaladı"
   Projectile-EnderPearl:
-    - "%player% shot themselves"
+    - "%player% kendini vurdu"
   Projectile-Fireball:
-    - "%player% fireballed themselves"
+    - "%player%, kendini ateş topuyla vurdu"
   Projectile-FishHook:
-    - "%player% got a fishhook caught in their head"
+    - "%player%, kafasına bir balık oltası taktı"
   Projectile-Snowball:
-    - "%player% shot themselves with snowball"
+    - "%player%, kendini kartopuyla vurdu"
   Projectile-Trident:
-    - "%player% shot themselves with trident"
+    - "%player%, kendini mızrakla vurdu"
   Suffocation:
-    - "%player% was squished to death"
-    - "PERMISSION[deathmessages.premium]%player% was mashed up pretty good."
+    - "%player%, sıkışarak öldü"
+    - PERMISSION[deathmessages.premium]%player% oldukça iyi süzülmüş.
   Fall:
-    - "%player% fell from a high place"
+    - "%player%, yüksek bir yerden düştü"
   Climbable:
-    - "%player% tried climbing to greater heights and fell off %climbable%"
+    - "%player%, daha yüksek yerlere tırmanmaya çalıştı ve %climbable%'den düştü"
   Fire:
-    - "%player% thought standing in fire was a good idea"
+    - "%player%, ateşte durmanın iyi bir fikir olduğunu düşündü"
   Fire-Tick:
-    - "%player% was burnt to a crisp"
+    - "%player%, kömürleşene kadar yandı"
   Melting:
-    - "%player% melted away"
+    - "%player% eriyip gitti"
   Lava:
-    - "%player% thought lava was a hot tub"
+    - "%player%, lavın bir jakuzi olduğunu düşündü"
   Drowning:
-    - "%player% thought they could swim forever"
+    - "%player%, sonsuza kadar yüzebileceğini düşündü"
   Explosion:
-    - "%player% blew up"
+    - "%player% patladı"
   TNT:
-    - "%player% was playing with tnt"
+    - "%player% TNT ile oynuyordu"
   Firework:
-    - "%player% thought playing with fireworks was a good idea"
+    - "%player%, havai fişeklerle oynamanın iyi bir fikir olduğunu düşündü"
   End-Crystal:
-    - "%player% blew up! They were playing around with an end-crystal!"
+    - "%player% patladı! Son kristal ile oynuyordu!"
   Void:
-    - "%player% fell into the void"
+    - "%player%, boşluğa düştü"
   Lightning:
-    - "%player% was struck by /lighting"
+    - "%player%, /lighting tarafından vuruldu"
   Suicide:
-    - "%player% killed themselves"
+    - "%player% kendini öldürdü"
   Starvation:
-    - "%player% ran out of food, and died"
+    - "%player%, yiyecekleri tükendi ve öldü"
   Poison:
-    - "%player% was playing with poison"
+    - "%player%, zehirle oynuyordu"
   Magic:
-    - "%player% was playing with magic"
+    - "%player%, büyüyle oynuyordu"
   Wither:
-    - "%player% withered away"
+    - "%player% solgunlaştı"
   Falling-Block:
-    - "%player% was squished by a %block%"
+    - "%player%, %block% tarafından ezildi"
   Dragon-Breath:
-    - "%player% died to a lingering dragons breath"
+    - "%player%, uzayan ejderha nefesiyle öldü"
   Custom:
-    - "%player% died in a unique way"
+    - "%player% benzersiz bir şekilde öldü"
   Fly-Into-Wall:
-    - "%player% flew into a wall"
+    - "%player%, duvara çarptı"
   Hot-Floor:
-    - "%player% was playing on a magma block too long"
+    - "%player%, magmanın üzerinde çok uzun süre oynadı"
   Cramming:
-    - "%player% was killed in a heavily populated space"
+    - "%player%, yoğun bir alanda öldürüldü"
   Dryout:
-    - "%player% belonged in the water. Not land"
+    - "%player% suya aitti, karaya değil"
   Freeze:
-    - "%player% did not put their snow suit on before they went to play."
+    - "%player% kardan adam takımını giymeden oynamaya gitti."
   Thorns:
-    - "%player% tried playing armor with thorns"
+    - "%player% dikenli zırh ile oynamaya çalıştı"
   Kill:
-    - "%player% was killed"
+    - "%player% öldürüldü"
   World-Border:
-    - "%player% left the confines of this world"
+    - "%player% bu dünyanın sınırlarının dışına çıktı"
   # Hook related deaths
   CombatLogX-Kill:
-    - "%player% wants to escape reality, but was still sent to another dimension -.-"
+    - "%player% gerçeklikten kaçmak istiyor ama yine de başka bir boyuta
+      gönderildi -.-"
   Unknown:
-    - "%player% died"
-
+    - "%player% öldü"
 Mobs:
   elderguardian:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% bazı %killer% tarafından kuşatıldı! Bir tanesi onları %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% bazı %killer%'lar tarafından kuşatıldı! Bir tanesi onları %weapon% ile savurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   witherskeleton:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% bazı %killer% tarafından kuşatıldı! Bir tanesi onları %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% bazı %killer%'lar tarafından kuşatıldı! Bir tanesi onları %weapon% ile savurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   stray:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% bazı %killer% tarafından kuşatıldı! Bir tanesi onları %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% bazı %killer%'lar tarafından kuşatıldı! Bir tanesi onları %weapon% ile savurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   husk:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% bazı %killer% tarafından kuşatıldı! Bir tanesi onları %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% bazı %killer%'lar tarafından kuşatıldı! Bir tanesi onları %weapon% ile savurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   zombievillager:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% bazı %killer% tarafından kuşatıldı! Bir tanesi onları %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% bazı %killer%'lar tarafından kuşatıldı! Bir tanesi onları %weapon% ile savurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   skeletonhorse:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% bazı %killer% tarafından kuşatıldı! Bir tanesi onları %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% bazı %killer%'lar tarafından kuşatıldı! Bir tanesi onları %weapon% ile savurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   zombiehorse:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% bir grup %killer% tarafından sıkıştırıldı! Bir tanesi %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% bir grup %killer% tarafından sıkıştırıldı! Bir tanesi %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   armorstand:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %weapon% kullanarak %killer% tarafından vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %weapon% kullanarak %killer% tarafından öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% bir grup %killer% tarafından sıkıştırıldı! Bir tanesi %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% bir grup %killer% tarafından sıkıştırıldı! Bir tanesi %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   donkey:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %weapon% kullanarak %killer% tarafından vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %weapon% kullanarak %killer% tarafından öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% bir grup %killer% tarafından sıkıştırıldı! Bir tanesi %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% bir grup %killer% tarafından sıkıştırıldı! Bir tanesi %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   mule:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %weapon% kullanarak %killer% tarafından vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %weapon% kullanarak %killer% tarafından öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% bir grup %killer% tarafından sıkıştırıldı! Bir tanesi %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% bir grup %killer% tarafından sıkıştırıldı! Bir tanesi %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   evoker:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %weapon% kullanarak %killer% tarafından vuruldu"
       Magic:
-        - "%player% was killed by a %killer% using magic"
+        - "%player% bir %killer% tarafından büyü kullanılarak öldürüldü"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %weapon% kullanarak %killer% tarafından öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% bir grup %killer% tarafından sıkıştırıldı! Bir tanesi %weapon% ile vurdu"
       Magic:
-        - "%player% was killed by some %killer% using magic"
+        - "%player% bir grup %killer% tarafından büyü kullanılarak öldürüldü"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% bir grup %killer% tarafından sıkıştırıldı! Bir tanesi %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   vex:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %weapon% kullanarak %killer% tarafından vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %weapon% kullanarak %killer% tarafından öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% bir grup %killer% tarafından sıkıştırıldı! Bir tanesi %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% bir grup %killer% tarafından sıkıştırıldı! Bir tanesi %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   vindicator:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %weapon% kullanarak %killer% tarafından vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %weapon% kullanarak %killer% tarafından öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% bir grup %killer% tarafından sıkıştırıldı! Bir tanesi %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% bir grup %killer% tarafından sıkıştırıldı! Bir tanesi %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   illusioner:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %weapon% kullanarak %killer% tarafından vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %weapon% kullanarak %killer% tarafından öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bazı %killer% tarafından sıkıştırıldı! Bunlardan biri %weapon% ile onları vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bazı %killer% tarafından sıkıştırıldı! Bunlardan biri %weapon% ile onları dövdü"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   creeper:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Explosion:
-        - "%player% was blown up by a %killer%"
+        - "%player%, %killer% tarafından havaya uçuruldu"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bazı %killer% tarafından sıkıştırıldı! Bunlardan biri %weapon% ile onları vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bazı %killer% tarafından sıkıştırıldı! Bunlardan biri %weapon% ile onları dövdü"
       Explosion:
-        - "%player% was blown up by some %killer%"
+        - "%player%, bazı %killer% tarafından havaya uçuruldu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   skeleton:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bazı %killer% tarafından sıkıştırıldı! Bunlardan biri %weapon% ile onları vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bazı %killer% tarafından sıkıştırıldı! Bunlardan biri %weapon% ile onları dövdü"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   spider:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bazı %killer% tarafından sıkıştırıldı! Bunlardan biri %weapon% ile onları vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bazı %killer% tarafından sıkıştırıldı! Bunlardan biri %weapon% ile onları dövdü"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   giant:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bazı %killer% tarafından sıkıştırıldı! Bunlardan biri %weapon% ile onları vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bazı %killer% tarafından sıkıştırıldı! Bunlardan biri %weapon% ile onları dövdü"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   zombie:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bazı %killer% tarafından sıkıştırıldı! Bunlardan biri %weapon% ile onları vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bazı %killer% tarafından sıkıştırıldı! Bunlardan biri %weapon% ile onları dövdü"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   slime:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bazı %killer% tarafından sıkıştırıldı! Bunlardan biri %weapon% ile onları vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bazı %killer% tarafından sıkıştırıldı! Bunlardan biri %weapon% ile onları dövdü"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   ghast:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Projectile-Fireball:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bazı %killer% tarafından kıstırıldı! Birisi onlara %weapon% ile vurdu"
       Projectile-Fireball:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bazı %killer% tarafından kıstırıldı! Birisi onlara %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bazı %killer% tarafından kıstırıldı! Birisi onlara %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   pigzombie:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %weapon% kullanarak %killer% tarafından vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %weapon% kullanarak %killer% tarafından öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bazı %killer% tarafından kıstırıldı! Birisi onlara %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bazı %killer% tarafından kıstırıldı! Birisi onlara %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   enderman:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %weapon% kullanarak %killer% tarafından vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %weapon% kullanarak %killer% tarafından öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bazı %killer% tarafından kıstırıldı! Birisi onlara %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bazı %killer% tarafından kıstırıldı! Birisi onlara %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   cavespider:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %weapon% kullanarak %killer% tarafından vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %weapon% kullanarak %killer% tarafından öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bazı %killer% tarafından kıstırıldı! Birisi onlara %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bazı %killer% tarafından kıstırıldı! Birisi onlara %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   silverfish:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %weapon% kullanarak %killer% tarafından vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %weapon% kullanarak %killer% tarafından öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bazı %killer% tarafından kıstırıldı! Birisi onlara %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bazı %killer% tarafından kıstırıldı! Birisi onlara %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   blaze:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %weapon% kullanarak %killer% tarafından vuruldu"
       Projectile-Fireball:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %weapon% kullanarak %killer% tarafından vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %weapon% kullanarak %killer% tarafından öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bazı %killer% tarafından kıstırıldı! Birisi onlara %weapon% ile vurdu"
       Projectile-Fireball:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bazı %killer% tarafından kıstırıldı! Birisi onlara %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bazı %killer% tarafından kıstırıldı! Birisi onlara %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   magmacube:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %weapon% kullanarak %killer% tarafından vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %weapon% kullanarak %killer% tarafından öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bazı %killer% tarafından kıstırıldı! Birisi onlara %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bazı %killer% tarafından kıstırıldı! Birisi onlara %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   enderdragon:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %weapon% kullanarak %killer% tarafından vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç %killer% tarafından çembere alındı! Biri %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% birkaç %killer% tarafından çembere alındı! Biri %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   wither:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Explosion:
-        - "%player% stood too close to a %killer% while it was spawning"
+        - "%player% %killer%'ın doğarken çok yakınında durdu"
       Projectile-Fireball:
-        - "%player% died to a wither skull"
+        - "%player% bir wither kafatasına yenik düştü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç %killer% tarafından çembere alındı! Biri %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% birkaç %killer% tarafından çembere alındı! Biri %weapon% ile vurdu"
       Explosion:
-        - "%player% stood too close to some %killer% while it was spawning"
+        - "%player% birkaç %killer%'ın doğarken çok yakınında durdu"
       Projectile-Fireball:
-        - "%player% died to some wither skulls"
+        - "%player% birkaç wither kafatasına yenik düştü"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   bat:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç %killer% tarafından çembere alındı! Biri %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% birkaç %killer% tarafından çembere alındı! Biri %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   witch:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Magic:
-        - "%player% was killed by a %killer% using magic"
+        - "%player% %killer% tarafından büyü kullanarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç %killer% tarafından çembere alındı! Biri %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% birkaç %killer% tarafından çembere alındı! Biri %weapon% ile vurdu"
       Magic:
-        - "%player% was killed by some %killer% using magic"
+        - "%player% birkaç %killer% tarafından büyü kullanarak öldürüldü"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   endermite:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç %killer% tarafından çembere alındı! Biri %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% birkaç %killer% tarafından çembere alındı! Biri %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   guardian:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç %killer% tarafından çembere alındı! Biri %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% birkaç %killer% tarafından çembere alındı! Biri %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   shulker:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Projectile-ShulkerBullet:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç tane %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Projectile-ShulkerBullet:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç tane %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% birkaç tane %killer% tarafından kuşatıldı! Biri %weapon% ile saldırdı"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   pig:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç tane %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% birkaç tane %killer% tarafından kuşatıldı! Biri %weapon% ile saldırdı"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   sheep:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç tane %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% birkaç tane %killer% tarafından kuşatıldı! Biri %weapon% ile saldırdı"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   cow:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç tane %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% birkaç tane %killer% tarafından kuşatıldı! Biri %weapon% ile saldırdı"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   chicken:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç tane %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% birkaç tane %killer% tarafından kuşatıldı! Biri %weapon% ile saldırdı"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   squid:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç tane %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% birkaç tane %killer% tarafından kuşatıldı! Biri %weapon% ile saldırdı"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   wolf:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç tane %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% birkaç tane %killer% tarafından kuşatıldı! Biri %weapon% ile saldırdı"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   mushroomcow:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç tane %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% bir grup %killer% tarafından saldırıya uğradı! Bir tanesi %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   snowman:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% bir grup %killer% tarafından saldırıya uğradı! Bir tanesi %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% bir grup %killer% tarafından saldırıya uğradı! Bir tanesi %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   ocelot:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% bir grup %killer% tarafından saldırıya uğradı! Bir tanesi %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% bir grup %killer% tarafından saldırıya uğradı! Bir tanesi %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   irongolem:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% bir grup %killer% tarafından saldırıya uğradı! Bir tanesi %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% bir grup %killer% tarafından saldırıya uğradı! Bir tanesi %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   horse:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% bir grup %killer% tarafından saldırıya uğradı! Bir tanesi %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% bir grup %killer% tarafından saldırıya uğradı! Bir tanesi %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   rabbit:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% bir grup %killer% tarafından saldırıya uğradı! Bir tanesi %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% bir grup %killer% tarafından saldırıya uğradı! Bir tanesi %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   polarbear:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% bir grup %killer% tarafından saldırıya uğradı! Bir tanesi %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% bir grup %killer% tarafından saldırıya uğradı! Bir tanesi %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player% bir grup %killer% tarafından öldürüldü"
   llama:
     Solo:
       Projectile-LlamaSpit:
-        - "%player% was spat on by a %killer%"
+        - "%player% bir %killer% tarafından tükürüldü"
       Projectile-Arrow:
-        - "%player% was ganged up on by a %killer%! One shot them with %weapon%"
+        - "%player% bir %killer% tarafından saldırıya uğradı! Bir tanesi %weapon% ile vurdu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player% bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player% bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-LlamaSpit:
-        - "%player% was spat on by some %killer%"
+        - "%player% bir grup %killer% tarafından tükürüldü"
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% bir grup %killer% tarafından saldırıya uğradı! Bir tanesi %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Bir tanesi onları %weapon% ile yere serdi"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   parrot:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Bir tanesi onları %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Bir tanesi onları %weapon% ile yere serdi"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   villager:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Bir tanesi onları %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Bir tanesi onları %weapon% ile yere serdi"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   turtle:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Bir tanesi onları %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Bir tanesi onları %weapon% ile yere serdi"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   phantom:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Bir tanesi onları %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Bir tanesi onları %weapon% ile yere serdi"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   cod:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Bir tanesi onları %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Bir tanesi onları %weapon% ile yere serdi"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   salmon:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Bir tanesi onları %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Bir tanesi onları %weapon% ile yere serdi"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   pufferfish:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Bir tanesi onları %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Bir tanesi onları %weapon% ile yere serdi"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   tropicalfish:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir şekilde %killer% tarafından %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, %killer% tarafından bir şekilde %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% birkaç %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   drowned:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, %killer% tarafından bir şekilde %weapon% kullanılarak vuruldu"
       Projectile-Trident:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, %killer% tarafından bir şekilde %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, %killer% tarafından bir şekilde %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Projectile-Trident:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% birkaç %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   dolphin:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, %killer% tarafından bir şekilde %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, %killer% tarafından bir şekilde %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% birkaç %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   cat:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, %killer% tarafından bir şekilde %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, %killer% tarafından bir şekilde %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% birkaç %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   panda:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, %killer% tarafından bir şekilde %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, %killer% tarafından bir şekilde %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% birkaç %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   pillager:
     Solo:
       Contact:
-        - "%player% was pushed into a cactus by %killer%"
+        - "%player%, %killer% tarafından bir kaktüse itildi"
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, %killer% tarafından bir şekilde %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, %killer% tarafından bir şekilde %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Contact:
-        - "%player% was pushed into a cactus by some %killer%"
+        - "%player%, birkaç %killer% tarafından bir kaktüse itildi"
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% birkaç %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   ravager:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, %killer% tarafından bir şekilde %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, %killer% tarafından bir şekilde %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player% birkaç %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player% birkaç %killer% tarafından kuşatıldı! Biri %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   traderllama:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir %killer% tarafından bir şekilde %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir %killer% tarafından bir şekilde %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Biri %weapon% kullanarak vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Biri %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   wanderingtrader:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir %killer% tarafından bir şekilde %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir %killer% tarafından bir şekilde %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Biri %weapon% kullanarak vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Biri %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   fox:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir %killer% tarafından bir şekilde %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir %killer% tarafından bir şekilde %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Biri %weapon% kullanarak vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Biri %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   bee:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir %killer% tarafından bir şekilde %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was stung by a %killer% somehow using %weapon%"
+        - "%player%, bir %killer% tarafından bir şekilde %weapon% kullanılarak sokuldu"
       Melee:
-        - "%player% was stung by a %killer%"
+        - "%player%, bir %killer% tarafından sokuldu"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Biri %weapon% kullanarak vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Biri %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   hoglin:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir %killer% tarafından bir şekilde %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir %killer% tarafından bir şekilde %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Biri %weapon% kullanarak vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Biri %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   piglin:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir %killer% tarafından bir şekilde %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir %killer% tarafından bir şekilde %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Biri %weapon% kullanarak vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Biri %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   strider:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir %killer% tarafından bir şekilde %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, bir %killer% tarafından bir şekilde %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, bir %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Biri %weapon% kullanarak vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bir grup %killer% tarafından pusuya düşürüldü! Biri %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   zoglin:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, bir %killer% tarafından bir şekilde %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, %killer% tarafından bir şekilde %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bazı %killer% tarafından çeteye alındı! Biri onları %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bazı %killer%'ler tarafından çeteye alındı! Biri onları %weapon% ile dövdü"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   piglinbrute:
     Solo:
       Projectile-Arrow:
-        - "%player% was shot by a %killer% somehow using %weapon%"
+        - "%player%, %killer% tarafından bir şekilde %weapon% kullanılarak vuruldu"
       Weapon:
-        - "%player% was slain by a %killer% somehow using %weapon%"
+        - "%player%, %killer% tarafından bir şekilde %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by a %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, bazı %killer% tarafından çeteye alındı! Biri onları %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bazı %killer%'ler tarafından çeteye alındı! Biri onları %weapon% ile dövdü"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
-  # 1.17
+        - "%player%, bir grup %killer% tarafından öldürüldü"
   goat:
     Solo:
       Melee:
-        - "%player% was knocked by a %killer%"
+        - "%player%, bir %killer% tarafından itildi"
     Gang:
       Melee:
-        - "%player% was knocked by a bunch of %killer%'s"
-  # 1.19
+        - "%player%, bir grup %killer% tarafından itildi"
   warden:
     Solo:
       Melee:
-        - "%player% was slain by %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
       Sonic-Boom:
-        - "%player% was obliterated by a sonically-charged shriek"
+        - "%player%, ses yüklü bir çığlık tarafından yok edildi"
     Gang:
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
       Sonic-Boom:
-        - "%player% was obliterated by a bunch of sonically-charged shrieks"
-  # 1.21
+        - "%player%, bir grup ses yüklü çığlık tarafından yok edildi"
   bogged:
     Solo:
       Projectile-Arrow:
-        - "%player% was bogged by %killer%."
+        - "%player%, %killer% tarafından batırıldı."
       Weapon:
-        - "%player% was bogged by %killer% using %weapon%"
+        - "%player%, %killer% tarafından %weapon% kullanılarak batırıldı"
       Melee:
-        - "%player% was knocked by a %killer%"
+        - "%player%, bir %killer% tarafından itildi"
     Gang:
       Projectile-Arrow:
-        - "%player% was bogged by a bunch of %killer%s"
+        - "%player%, bir grup %killer% tarafından batırıldı"
       Weapon:
-        - "%player% was bogged by a bunch of %killer%s using %weapon%"
+        - "%player%, bir grup %killer% tarafından %weapon% kullanılarak batırıldı"
       Melee:
-        - "%player% was knocked by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından itildi"
   breeze:
     Solo:
       Projectile-Fireball:
-        - "%player% was knocked by %killer%"
+        - "%player%, %killer% tarafından itildi"
       Melee:
-        - "%player% was knocked by a %killer%"
+        - "%player%, bir %killer% tarafından itildi"
     Gang:
       Projectile-Fireball:
-        - "%player% was knocked by a bunch of %killer%s"
+        - "%player%, bir grup %killer% tarafından itildi"
       Melee:
-        - "%player% was knocked by a bunch of %killer%'s"
-  # 1.21.4
+        - "%player%, bir grup %killer% tarafından itildi"
   creaking:
     Solo:
       Projectile-Fireball:
-        - "%player% was knocked by %killer%"
+        - "%player%, %killer% tarafından itildi"
       Melee:
-        - "%player% was knocked by a %killer%"
+        - "%player%, bir %killer% tarafından itildi"
     Gang:
       Projectile-Fireball:
-        - "%player% was knocked by a bunch of %killer%s"
+        - "%player%, bir grup %killer% tarafından itildi"
       Melee:
-        - "%player% was knocked by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından itildi"
   player:
     Solo:
       Bed:
-        - "%player% stood too close to %killer%'s bed in the %world_environment%"
+        - "%player%, %killer%'nin yatağına %world_environment% ortamında fazla yaklaştı"
       Respawn-Anchor:
-        - "%player% stood too close to %killer%'s respawn anchor in the %world_environment%"
+        - "%player%, %killer%'nin respawn noktasına %world_environment% ortamında fazla yaklaştı"
       Contact:
-        - "%player% was pushed into a cactus by %killer%"
+        - "%player%, %killer% tarafından bir kaktüse itildi"
       Projectile-Unknown:
-        - "%player% was shot by %killer%"
+        - "%player%, %killer% tarafından vuruldu"
       Projectile-Arrow:
-        - "%player% was shot by %killer% somehow using %weapon%"
+        - "%player%, %killer% tarafından bir şekilde %weapon% kullanılarak vuruldu"
       Projectile-Fireball:
-        - "%player% was fireballed by %killer%"
+        - "%player%, %killer% tarafından ateş topu ile vuruldu"
       Projectile-Snowball:
-        - "%player% was hit in the head with a snowball thrown by %killer%"
+        - "%player%, %killer% tarafından atılan bir kartopu ile kafasından vuruldu"
       Projectile-Trident:
-        - "%player% was impaled by %killer%"
+        - "%player%, %killer% tarafından delip geçildi"
       Weapon:
-        - "%player% was slain by %killer% somehow using %weapon%"
+        - "%player%, %killer% tarafından bir şekilde %weapon% kullanılarak öldürüldü"
       Melee:
-        - "%player% was slain by %killer%"
+        - "%player%, %killer% tarafından öldürüldü"
       Suffocation:
-        - "%player% suffocated in a wall while fighting %killer_display%"
+        - "%player%, %killer_display% ile savaşırken bir duvarda boğuldu"
       Fall:
-        - "%player% was pushed off a high place by %killer%"
+        - "%player%, %killer% tarafından yüksek bir yerden itildi"
       Lava:
-        - "%player% was pushed into lava by %killer%"
+        - "%player%, %killer% tarafından lavya itildi"
       Explosion:
-        - "%killer% blew up %player%"
+        - "%killer%, %player%’ı havaya uçurdu"
       TNT:
-        - "%killer% blew up %player% with tnt"
+        - "%killer%, %player%’ı TNT ile havaya uçurdu"
       Firework:
-        - "%player% stood too close to %killer%'s fireworks"
+        - "%player%, %killer%'nin havai fişeklerine fazla yaklaştı"
       End-Crystal:
-        - "%killer% killed %player% by blowing up an end-crystal!"
+        - "%killer%, bir end-kristalini havaya uçurarak %player%'ı öldürdü!"
       Void:
-        - "%player% was pushed into the void by %killer%"
+        - "%player%, %killer% tarafından boşluğa itildi"
       Wither:
-        - "%player% withered away from %killer%'s magic"
+        - "%player% %killer%'ın büyüsüyle kavrulup öldü"
       Thorns:
-        - "%player% tried playing with %killer%'s armor with thorns"
+        - "%player%, %killer%'ın dikenli zırhıyla oynamaya çalıştı"
       # Hook related deaths
       CombatLogX-Kill:
-        - "%player% logged out during combat fighting %killer%, they died still -.-"
+        - "%player%, %killer% ile savaşırken savaştan kaçtı, yine de öldü -.-"
     Gang:
       Projectile-Arrow:
-        - "%player% was ganged up on by some %killer%! One shot them with %weapon%"
+        - "%player%, birkaç %killer% tarafından hedef alındı! Bir tanesi onları %weapon% ile vurdu"
       Weapon:
-        - "%player% was ganed up on by some %killer%'s! One wacked them with %weapon%"
+        - "%player%, bazı %killer%'lar tarafından sıkıştırıldı! Bir tanesi onları %weapon% ile vurdu"
       Melee:
-        - "%player% was slain by a bunch of %killer%'s"
+        - "%player%, bir grup %killer% tarafından öldürüldü"
 
 Custom-Mobs:
   Mythic-Mobs:
     SkeletalMinion:
       Solo:
-        Projectile-Arrow:
-          - "%player% was shot by %killer%"
+        Projectile-Arrow: 
+          - "%player%, %killer% tarafından vuruldu"
