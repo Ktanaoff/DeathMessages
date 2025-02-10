@@ -1,11 +1,11 @@
 # DeathMessagesTR
-
+#
+#
+#
 KARŞILAŞTIĞINIZ ÇEVİRİ HATALARINI BİLDİRİNİZ - 📫 Discord: `_ktana`
-
-
-
-
-
+#
+#
+#
 ![GitHub License](https://img.shields.io/github/license/Winds-Studio/DeathMessages?style=for-the-badge)![GitHub Build Status](https://img.shields.io/github/actions/workflow/status/Winds-Studio/DeathMessages/build.yml?style=for-the-badge)![Github Stars](https://img.shields.io/github/stars/Winds-Studio/DeathMessages?style=for-the-badge)
 
 **_🔔 Active Testing - Report any bugs or give suggestions_**
@@ -48,16 +48,6 @@ Compatibility
 ## Contact
 
 - 📫 Discord: `dreeam___` | QQ: `2682173972`
-
-## Translations
-Please feel free to contribute or modify existing translations if they are not right.
-### Contributors
-
-- [Ktanaoff](https://github.com/Ktanaoff) (Turkish Translation)
-
-### Contribute/Download
-
-- [Crowndin - DeathMessages](https://crowdin.com/project/deathmessage)
 
 ## Building
 
