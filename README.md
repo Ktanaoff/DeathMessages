@@ -1,4 +1,4 @@
-# DeathMessages
+# DeathMessagesTR
 
 KARŞILAŞTIĞINIZ ÇEVİRİ HATALARINI BİLDİRİNİZ - 📫 Discord: `_ktana`
 
